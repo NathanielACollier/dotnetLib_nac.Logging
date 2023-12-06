@@ -74,4 +74,18 @@ public class Logger
             CallingSourceLineNumber = sourceLineNumber
         });
     }
+
+    public void Fatal(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
+    {
+        OnNewMessage?.Invoke(this, new LogMessage
+        {
+            Level = "FATAL",
+            Message = message,
+            CallingClassType = Caller_classType,
+            CallingMemberName = callerMemberName,
+            CallingSourceFilePath = sourceFilePath,
+            CallingSourceLineNumber = sourceLineNumber
+        });
+    }
+
 }
