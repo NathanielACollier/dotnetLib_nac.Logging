@@ -8,7 +8,7 @@ public class Logger
 {
     public static event EventHandler<LogMessage> OnNewMessage;
 
-    private string Caller_className;
+    private Type Caller_classType;
 
     public Logger()
     {
@@ -16,7 +16,7 @@ public class Logger
         var mth = new System.Diagnostics.StackTrace().GetFrame(1).GetMethod();
         var _class_to_log = mth.ReflectedType;
 
-        this.Caller_className = _class_to_log.FullName;
+        this.Caller_classType = _class_to_log;
     }
 
     public void Info(string message, [CallerMemberName] string callerMemberName = "",
@@ -27,7 +27,7 @@ public class Logger
         {
             Level = "INFO",
             Message = message,
-            CallingClassName = Caller_className,
+            CallingClassType = Caller_classType,
             CallingMemberName = callerMemberName,
             CallingSourceFilePath = sourceFilePath,
             CallingSourceLineNumber = sourceLineNumber
@@ -42,7 +42,7 @@ public class Logger
         {
             Level = "DEBUG",
             Message = message,
-            CallingClassName = Caller_className,
+            CallingClassType = Caller_classType,
             CallingMemberName = callerMemberName,
             CallingSourceFilePath = sourceFilePath,
             CallingSourceLineNumber = sourceLineNumber
@@ -55,7 +55,7 @@ public class Logger
         {
             Level = "WARN",
             Message = message,
-            CallingClassName = Caller_className,
+            CallingClassType = Caller_classType,
             CallingMemberName = callerMemberName,
             CallingSourceFilePath = sourceFilePath,
             CallingSourceLineNumber = sourceLineNumber
@@ -68,7 +68,7 @@ public class Logger
         {
             Level = "ERROR",
             Message = message,
-            CallingClassName = Caller_className,
+            CallingClassType = Caller_classType,
             CallingMemberName = callerMemberName,
             CallingSourceFilePath = sourceFilePath,
             CallingSourceLineNumber = sourceLineNumber

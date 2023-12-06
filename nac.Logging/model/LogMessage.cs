@@ -10,7 +10,7 @@ public class LogMessage
     public string Message { get; set; }
     public string CallingMemberName { get; set; }
     public DateTime EventDate { get; }
-    public string CallingClassName { get; internal set; }
+    public Type CallingClassType { get; internal set; }
     public string CallingSourceFilePath { get; internal set; }
     public int CallingSourceLineNumber { get; internal set; }
 
@@ -21,6 +21,6 @@ public class LogMessage
 
     public override string ToString()
     {
-        return $"[{EventDate:yyyy-MM-dd hh:mm:ss tt}] - {Level} - {CallingClassName}.{CallingMemberName} - {Message}";
+        return $"[{EventDate:yyyy-MM-dd hh:mm:ss tt}] - {Level} - {CallingClassType.FullName}.{CallingMemberName} - {Message}";
     }
 }
