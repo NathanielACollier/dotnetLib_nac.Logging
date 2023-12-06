@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	  <LangVersion>latestmajor</LangVersion>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <Description>Base logging library that handles the messages</Description>
+	  <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>

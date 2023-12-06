@@ -11,6 +11,8 @@ public class LogMessage
     public string CallingMemberName { get; set; }
     public DateTime EventDate { get; }
     public string CallingClassName { get; internal set; }
+    public string CallingSourceFilePath { get; internal set; }
+    public int CallingSourceLineNumber { get; internal set; }
 
     public LogMessage()
     {
