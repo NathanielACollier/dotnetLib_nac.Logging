@@ -19,47 +19,59 @@ public class Logger
         this.Caller_className = _class_to_log.FullName;
     }
 
-    public void Info(string message, [CallerMemberName] string callerMemberName = "")
+    public void Info(string message, [CallerMemberName] string callerMemberName = "",
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int sourceLineNumber = 0)
     {
         OnNewMessage?.Invoke(this, new LogMessage
         {
             Level = "INFO",
             Message = message,
             CallingClassName = Caller_className,
-            CallingMemberName = callerMemberName
+            CallingMemberName = callerMemberName,
+            CallingSourceFilePath = sourceFilePath,
+            CallingSourceLineNumber = sourceLineNumber
         });
     }
 
-    public void Debug(string message, [CallerMemberName] string callerMemberName = "")
+    public void Debug(string message, [CallerMemberName] string callerMemberName = "",
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int sourceLineNumber = 0)
     {
         OnNewMessage?.Invoke(this, new LogMessage
         {
             Level = "DEBUG",
             Message = message,
             CallingClassName = Caller_className,
-            CallingMemberName = callerMemberName
+            CallingMemberName = callerMemberName,
+            CallingSourceFilePath = sourceFilePath,
+            CallingSourceLineNumber = sourceLineNumber
         });
     }
 
-    public void Warn(string message, [CallerMemberName] string callerMemberName = "")
+    public void Warn(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
     {
         OnNewMessage?.Invoke(this, new LogMessage
         {
             Level = "WARN",
             Message = message,
             CallingClassName = Caller_className,
-            CallingMemberName = callerMemberName
+            CallingMemberName = callerMemberName,
+            CallingSourceFilePath = sourceFilePath,
+            CallingSourceLineNumber = sourceLineNumber
         });
     }
 
-    public void Error(string message, [CallerMemberName] string callerMemberName = "")
+    public void Error(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
     {
         OnNewMessage?.Invoke(this, new LogMessage
         {
             Level = "ERROR",
             Message = message,
             CallingClassName = Caller_className,
-            CallingMemberName = callerMemberName
+            CallingMemberName = callerMemberName,
+            CallingSourceFilePath = sourceFilePath,
+            CallingSourceLineNumber = sourceLineNumber
         });
     }
 }
