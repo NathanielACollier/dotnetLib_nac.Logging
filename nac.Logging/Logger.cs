@@ -1,13 +1,13 @@
 ﻿using nac.Logging.model;
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace nac.Logging;
 
 public class Logger
 {
-    public static event EventHandler<LogMessage> OnNewMessage;
-
+    private static List<Appenders.LogAppender> appenders = new List<Appenders.LogAppender>();
     private Type Caller_classType;
 
     public Logger()
@@ -23,9 +23,9 @@ public class Logger
                 [CallerFilePath] string sourceFilePath = "",
                 [CallerLineNumber] int sourceLineNumber = 0)
     {
-        OnNewMessage?.Invoke(this, new LogMessage
+        CreateLogEntry(new LogMessage
         {
-            Level = "INFO",
+            Level = model.LogLevel.Info,
             Message = message,
             CallingClassType = Caller_classType,
             CallingMemberName = callerMemberName,
@@ -38,9 +38,9 @@ public class Logger
                 [CallerFilePath] string sourceFilePath = "",
                 [CallerLineNumber] int sourceLineNumber = 0)
     {
-        OnNewMessage?.Invoke(this, new LogMessage
+        CreateLogEntry(new LogMessage
         {
-            Level = "DEBUG",
+            Level = model.LogLevel.Debug,
             Message = message,
             CallingClassType = Caller_classType,
             CallingMemberName = callerMemberName,
@@ -51,9 +51,9 @@ public class Logger
 
     public void Warn(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
     {
-        OnNewMessage?.Invoke(this, new LogMessage
+        CreateLogEntry(new LogMessage
         {
-            Level = "WARN",
+            Level = model.LogLevel.Warn,
             Message = message,
             CallingClassType = Caller_classType,
             CallingMemberName = callerMemberName,
@@ -64,9 +64,9 @@ public class Logger
 
     public void Error(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
     {
-        OnNewMessage?.Invoke(this, new LogMessage
+        CreateLogEntry(new LogMessage
         {
-            Level = "ERROR",
+            Level = model.LogLevel.Error,
             Message = message,
             CallingClassType = Caller_classType,
             CallingMemberName = callerMemberName,
@@ -77,9 +77,9 @@ public class Logger
 
     public void Fatal(string message, [CallerMemberName] string callerMemberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
     {
-        OnNewMessage?.Invoke(this, new LogMessage
+        CreateLogEntry( new LogMessage
         {
-            Level = "FATAL",
+            Level = model.LogLevel.Fatal,
             Message = message,
             CallingClassType = Caller_classType,
             CallingMemberName = callerMemberName,
@@ -87,5 +87,36 @@ public class Logger
             CallingSourceLineNumber = sourceLineNumber
         });
     }
+    
+    internal static model.LogLevel getLogLevelFromText(string logLevelText)
+    {
+        return logLevelText.Trim().ToLower() switch
+        {
+            "info" => model.LogLevel.Info,
+            "debug" => model.LogLevel.Debug,
+            "warn" => model.LogLevel.Warn,
+            "error" => model.LogLevel.Error,
+            "fatal" => model.LogLevel.Fatal,
+            _ => throw new Exception($"Unknown log level [{logLevelText}]")
+        };
+    }
+
+    internal static void Register(Appenders.LogAppender __appender){
+        if( appenders.Contains(__appender)){
+            return;
+        }
+
+        appenders.Add(__appender);
+    }
+    
+    private static void CreateLogEntry(model.LogMessage logMessage){
+
+
+        var appendersAtCallTime = new List<Appenders.LogAppender>(appenders); // make a copy to prevent collection was modified in foreach loop errors
+        foreach( var _a in appendersAtCallTime ){
+            _a.HandleLog(logMessage);
+        }
+    }
+
 
 }

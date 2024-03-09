@@ -6,7 +6,7 @@ namespace nac.Logging.model;
 
 public class LogMessage
 {
-    public string Level { get; set; }
+    public model.LogLevel Level { get; set; }
     public string Message { get; set; }
     public string CallingMemberName { get; set; }
     public DateTime EventDate { get; }
@@ -21,6 +21,7 @@ public class LogMessage
 
     public override string ToString()
     {
-        return $"[{EventDate:yyyy-MM-dd hh:mm:ss tt}] - {Level} - {CallingClassType.FullName}.{CallingMemberName} - {Message}";
+        string levelText = this.Level.ToString().ToUpper();
+        return $"[{EventDate:yyyy-MM-dd hh:mm:ss tt}] - {levelText} - {CallingClassType.FullName}.{CallingMemberName} - {Message}";
     }
 }
