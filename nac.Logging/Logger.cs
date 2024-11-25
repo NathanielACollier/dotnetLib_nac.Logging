@@ -101,7 +101,7 @@ public class Logger
         };
     }
 
-    internal static void Register(Appenders.LogAppender __appender){
+    public static void Register(Appenders.LogAppender __appender){
         if( appenders.Contains(__appender)){
             return;
         }
@@ -109,7 +109,7 @@ public class Logger
         appenders.Add(__appender);
     }
     
-    private static void CreateLogEntry(model.LogMessage logMessage){
+    public static void CreateLogEntry(model.LogMessage logMessage){
 
 
         var appendersAtCallTime = new List<Appenders.LogAppender>(appenders); // make a copy to prevent collection was modified in foreach loop errors
