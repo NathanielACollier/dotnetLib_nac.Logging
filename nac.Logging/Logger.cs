@@ -88,7 +88,7 @@ public class Logger
         });
     }
     
-    internal static model.LogLevel getLogLevelFromText(string logLevelText)
+    public static model.LogLevel getLogLevelFromText(string logLevelText)
     {
         return logLevelText.Trim().ToLower() switch
         {
