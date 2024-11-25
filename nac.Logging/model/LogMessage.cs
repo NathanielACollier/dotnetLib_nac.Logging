@@ -10,9 +10,9 @@ public class LogMessage
     public string Message { get; set; }
     public string CallingMemberName { get; set; }
     public DateTime EventDate { get; }
-    public Type CallingClassType { get; internal set; }
-    public string CallingSourceFilePath { get; internal set; }
-    public int CallingSourceLineNumber { get; internal set; }
+    public Type CallingClassType { get; set; }
+    public string CallingSourceFilePath { get; set; }
+    public int CallingSourceLineNumber { get; set; }
 
     public LogMessage()
     {
