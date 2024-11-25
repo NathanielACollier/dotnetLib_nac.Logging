@@ -1,4 +1,4 @@
-$buildConfigurationName = "Release"
+$buildConfigurationName = "Debug"
 
 $projectFileInfo = Get-ChildItem -Path $PSScriptRoot | where { $_.Extension -eq ".csproj"} | select -First 1
 Write-Host "Project file " $projectFileInfo.FullName
